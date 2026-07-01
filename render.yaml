@@ -1,7 +1,13 @@
+databases:
+  - name: affiliate-db
+    databaseName: affiliate_launch_kit
+    user: alk_user
+    plan: free
+
 services:
   - type: web
     name: affiliate-backend
-    env: docker
+    runtime: docker
     dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
@@ -12,6 +18,7 @@ services:
       - key: REDIS_URL
         fromService:
           name: affiliate-redis
+          type: redis
           property: connectionString
       - key: NODE_ENV
         value: production
@@ -21,18 +28,13 @@ services:
   - type: redis
     name: affiliate-redis
     plan: free
-
-  - type: postgres
-    name: affiliate-db
-    plan: free
-    databaseName: affiliate_launch_kit
-    user: alk_user
+    ipAllowList: []
 
   - type: web
     name: affiliate-frontend
-    env: static
+    runtime: static
     buildCommand: cd frontend && npm install && npm run build
-    publishPath: frontend/dist
+    staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
         value: https://affiliate-backend.onrender.com/api
