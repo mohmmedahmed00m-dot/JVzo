@@ -2,7 +2,7 @@ services:
   - type: web
     name: affiliate-backend
     env: docker
-    dockerfilePath: backend/Dockerfile # I need to create a Dockerfile for the backend
+    dockerfilePath: backend/Dockerfile
     plan: free
     envVars:
       - key: DATABASE_URL
@@ -20,9 +20,9 @@ services:
 
   - type: redis
     name: affiliate-redis
-    plan: freeL
+    plan: free
 
-  - type: database
+  - type: postgres
     name: affiliate-db
     plan: free
     databaseName: affiliate_launch_kit
@@ -35,4 +35,4 @@ services:
     publishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://affiliate-backend.onrender.com/api # This is a placeholder, Render will provide the actual URL
+        value: https://affiliate-backend.onrender.com/api
