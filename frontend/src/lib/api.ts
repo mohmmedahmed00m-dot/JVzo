@@ -6,7 +6,7 @@
  * - Refresh tokens never touch JS (httpOnly cookie set by the backend).
  */
 
-const BASE = '/api';
+const BASE = import.meta.env.VITE_API_URL || '/api';
 
 export class ApiError extends Error {
   code: string;
